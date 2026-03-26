@@ -1009,10 +1009,10 @@ export default function PersonalSite() {
               five handles everything from warehouse design to ad hoc "hey can
               you pull this data real quick" requeststhose “quick data pulls” that are… never actually quick.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED, marginBottom: 16 }}>
               I hold a Master’s degree in Data Science from Monash University, supported by the LPDP scholarship.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED, marginBottom: 16 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED }}>
               These days, I split my time between building, thinking, and sharing about data & AI.
             </p>
           </div>
