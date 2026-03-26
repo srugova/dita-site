@@ -999,22 +999,21 @@ export default function PersonalSite() {
                 marginBottom: 24,
               }}
             >
-              Part data engineer, part product person, part content creator,
-              fully unable to pick just one thing.
+              Part data person, part product person, part content creator,
+              and still not choosing just one lane (and maybe I never will).
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED, marginBottom: 16 }}>
               I lead Product Data & Insights at Gramedia Digital — basically I'm
               the person who builds the data infrastructure, ML pipelines, and
               internal tools for Indonesia's biggest book ecosystem. My team of
               five handles everything from warehouse design to ad hoc "hey can
-              you pull this data real quick" requests (spoiler: it's never quick).
+              you pull this data real quick" requeststhose “quick data pulls” that are… never actually quick.
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED }}>
-              I got my Master's in Data Science from Monash Uni (shoutout LPDP
-              for funding my Melbourne era) — my thesis was GreenSpot, a geospatial
-              platform for urban green space planning that's actually live. Now I split
-              my time between building things at work, sharing data & AI content
-              online, and pretending I have work-life balance.
+              I hold a Master’s degree in Data Science from Monash University, supported by the LPDP scholarship.
+            </p>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED }}>
+              These days, I split my time between building, thinking, and sharing about data & AI.
             </p>
           </div>
 
