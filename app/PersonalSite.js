@@ -1012,7 +1012,7 @@ export default function PersonalSite() {
             <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED }}>
               I hold a Master’s degree in Data Science from Monash University, supported by the LPDP scholarship.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: MUTED, marginBottom: 16 }}>
               These days, I split my time between building, thinking, and sharing about data & AI.
             </p>
           </div>
