@@ -780,7 +780,7 @@ export default function PersonalSite() {
             gap: 24,
           }}
         >
-          {projects.map((project, i) => (
+          {projects.filter(p => !p.archived).map((project, i) => (
             <div
               key={i}
               className="project-card"
@@ -794,22 +794,35 @@ export default function PersonalSite() {
                 position: "relative",
                 overflow: "hidden",
                 border: `1px solid ${hoveredProject === i ? `${ACCENT}30` : "transparent"}`,
-                gridColumn: i === projects.length - 1 && projects.length % 2 === 1 ? "1 / -1" : "auto",
+                gridColumn: i === projects.filter(p => !p.archived).length - 1 && projects.filter(p => !p.archived).length % 2 === 1 ? "1 / -1" : "auto",
               }}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  top: -20,
-                  right: -10,
-                  fontSize: 80,
-                  opacity: hoveredProject === i ? 0.15 : 0.08,
-                  transition: "opacity 0.4s ease",
-                  pointerEvents: "none",
-                }}
-              >
-                {project.emoji}
-              </div>
+              {!project.image && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -20,
+                    right: -10,
+                    fontSize: 80,
+                    opacity: hoveredProject === i ? 0.15 : 0.08,
+                    transition: "opacity 0.4s ease",
+                    pointerEvents: "none",
+                  }}
+                >
+                  {project.emoji}
+                </div>
+              )}
+
+              {project.image && (
+                <div style={{
+                  margin: "-36px -36px 20px -36px",
+                  height: 180,
+                  overflow: "hidden",
+                  borderRadius: "16px 16px 0 0",
+                }}>
+                  <img src={project.image} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+              )}
 
               <Tag>{project.tag}</Tag>
 
@@ -871,7 +884,7 @@ export default function PersonalSite() {
         <SectionTitle index="02">Things I Yap About</SectionTitle>
 
         <div>
-          {blogPosts.map((post, i) => (
+          {blogPosts.filter(p => !p.archived).map((post, i) => (
             <div
               key={i}
               className="blog-row"
@@ -928,6 +941,14 @@ export default function PersonalSite() {
                   {post.preview}
                 </p>
               </div>
+              {post.image && (
+                <div style={{
+                  flexShrink: 0, width: 90, height: 68, borderRadius: 10,
+                  overflow: "hidden", alignSelf: "center",
+                }}>
+                  <img src={post.image} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+              )}
               <span
                 style={{
                   fontSize: 20,
@@ -1281,6 +1302,11 @@ export default function PersonalSite() {
 
           <div style={{ maxWidth: 720, margin: "0 auto", padding: "60px 40px 120px" }}>
             {/* Header */}
+            {selectedProject.image && (
+              <div style={{ marginBottom: 40, borderRadius: 16, overflow: "hidden", maxHeight: 420 }}>
+                <img src={selectedProject.image} alt={selectedProject.title} style={{ width: "100%", objectFit: "cover", display: "block" }} />
+              </div>
+            )}
             <div style={{ marginBottom: 48 }}>
               <span style={{ fontSize: 64, display: "block", marginBottom: 16 }}>
                 {selectedProject.emoji}
@@ -1582,6 +1608,12 @@ export default function PersonalSite() {
             {/* Divider */}
             <div style={{ width: 40, height: 2, background: ACCENT, marginBottom: 40 }} />
 
+            {selectedPost.image && (
+              <div style={{ marginBottom: 40, borderRadius: 16, overflow: "hidden", maxHeight: 420 }}>
+                <img src={selectedPost.image} alt={selectedPost.title} style={{ width: "100%", objectFit: "cover", display: "block" }} />
+              </div>
+            )}
+
             {/* Body */}
             {selectedPost.detail.body.split("\n\n").map((para, i) => (
               <p
@@ -1776,15 +1808,20 @@ export default function PersonalSite() {
 
           {/* CMS Tabs */}
           <div style={{ padding: "20px 40px 0", display: "flex", gap: 4 }}>
-            {["projects", "posts"].map(tab => (
-              <button key={tab} onClick={() => { setCmsTab(tab); setEditIdx(null); }} style={{
+            {[
+              { id: "projects", label: "Projects" },
+              { id: "posts", label: "Blog Posts" },
+              { id: "archived", label: `Archived (${[...projects, ...blogPosts].filter(x => x.archived).length})` },
+            ].map(tab => (
+              <button key={tab.id} onClick={() => { setCmsTab(tab.id); setEditIdx(null); }} style={{
                 fontFamily: "'DM Mono', monospace", fontSize: 13,
                 padding: "10px 20px", borderRadius: "8px 8px 0 0", cursor: "pointer",
-                background: cmsTab === tab ? "white" : "transparent",
-                border: cmsTab === tab ? `1px solid ${DARK}10` : "1px solid transparent",
-                borderBottom: cmsTab === tab ? "1px solid white" : "none",
-                color: cmsTab === tab ? DARK : MUTED, fontWeight: cmsTab === tab ? 600 : 400,
-              }}>{tab === "projects" ? "Projects" : "Blog Posts"}</button>
+                background: cmsTab === tab.id ? "white" : "transparent",
+                border: cmsTab === tab.id ? `1px solid ${DARK}10` : "1px solid transparent",
+                borderBottom: cmsTab === tab.id ? "1px solid white" : "none",
+                color: cmsTab === tab.id ? (tab.id === "archived" ? "#D97706" : DARK) : MUTED,
+                fontWeight: cmsTab === tab.id ? 600 : 400,
+              }}>{tab.label}</button>
             ))}
           </div>
 
@@ -1794,39 +1831,48 @@ export default function PersonalSite() {
             {/* PROJECT CMS */}
             {cmsTab === "projects" && editIdx === null && (
               <div style={{ padding: "24px 0" }}>
-                {projects.map((p, i) => (
+                {projects.filter(p => !p.archived).map((p, i) => {
+                  const realIdx = projects.indexOf(p);
+                  return (
                   <div key={i} style={{
                     display: "flex", justifyContent: "space-between", alignItems: "center",
                     padding: "16px 0", borderBottom: `1px solid ${DARK}06`,
                   }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <span style={{ fontSize: 24 }}>{p.emoji}</span>
+                      {p.image ? (
+                        <div style={{ width: 36, height: 36, borderRadius: 8, overflow: "hidden", flexShrink: 0 }}>
+                          <img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: 24 }}>{p.emoji}</span>
+                      )}
                       <div>
                         <div style={{ fontWeight: 600, fontSize: 14 }}>{p.title}</div>
                         <div style={{ fontSize: 12, color: MUTED }}>{p.tag}</div>
                       </div>
                     </div>
                     <div style={{ display: "flex", gap: 8 }}>
-                      <button onClick={() => setEditIdx(i)} style={{
+                      <button onClick={() => setEditIdx(realIdx)} style={{
                         fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
                         background: `${ACCENT}10`, color: ACCENT, border: "none",
                         fontFamily: "'DM Mono', monospace",
                       }}>Edit</button>
                       <button onClick={() => {
-                        const n = projects.filter((_, j) => j !== i);
+                        const n = [...projects]; n[realIdx] = { ...n[realIdx], archived: true };
                         setProjects(n); saveData(n, blogPosts);
                       }} style={{
                         fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
-                        background: `${DARK}06`, color: MUTED, border: "none",
+                        background: "#D9770610", color: "#D97706", border: "none",
                         fontFamily: "'DM Mono', monospace",
-                      }}>Delete</button>
+                      }}>Archive</button>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
                 <button onClick={() => {
                   const n = [...projects, {
                     id: `new-${Date.now()}`, title: "New Project", tag: "Tag", desc: "Description...",
-                    tech: ["Tech"], emoji: "🆕",
+                    tech: ["Tech"], emoji: "🆕", image: "",
                     detail: { tagline: "Tagline...", story: "Story...", role: "Role...", impact: "Impact...", links: [] },
                   }];
                   setProjects(n); setEditIdx(n.length - 1);
@@ -1881,6 +1927,15 @@ export default function PersonalSite() {
                       )}
                     </div>
                   ))}
+                  <div style={{ marginBottom: 16 }}>
+                    <label style={labelStyle}>Image URL (optional — e.g. /images/project.jpg)</label>
+                    <input value={p.image || ""} onChange={e => update("image", e.target.value)} style={inputStyle} placeholder="/images/my-project.jpg" />
+                    {p.image && (
+                      <div style={{ marginTop: 8, borderRadius: 8, overflow: "hidden", height: 120 }}>
+                        <img src={p.image} alt="preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      </div>
+                    )}
+                  </div>
                   <div style={{ borderTop: `1px solid ${DARK}08`, paddingTop: 20, marginTop: 20 }}>
                     <h4 style={{ ...labelStyle, fontSize: 12, marginBottom: 16 }}>Detail Page</h4>
                     {[
@@ -1898,11 +1953,18 @@ export default function PersonalSite() {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => { saveData(projects, blogPosts); setEditIdx(null); }} style={{
-                    marginTop: 12, padding: "12px 28px", borderRadius: 8, cursor: "pointer",
-                    background: ACCENT, color: "white", border: "none", fontSize: 14,
-                    fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
-                  }}>Save & Close</button>
+                  <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
+                    <button onClick={() => saveData(projects, blogPosts)} style={{
+                      padding: "12px 28px", borderRadius: 8, cursor: "pointer",
+                      background: `${ACCENT}15`, color: ACCENT, border: `1px solid ${ACCENT}30`, fontSize: 14,
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
+                    }}>Save</button>
+                    <button onClick={() => { saveData(projects, blogPosts); setEditIdx(null); }} style={{
+                      padding: "12px 28px", borderRadius: 8, cursor: "pointer",
+                      background: ACCENT, color: "white", border: "none", fontSize: 14,
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
+                    }}>Save & Close</button>
+                  </div>
                 </div>
               );
             })()}
@@ -1910,36 +1972,46 @@ export default function PersonalSite() {
             {/* BLOG POST CMS */}
             {cmsTab === "posts" && editIdx === null && (
               <div style={{ padding: "24px 0" }}>
-                {blogPosts.map((p, i) => (
+                {blogPosts.filter(p => !p.archived).map((p, i) => {
+                  const realIdx = blogPosts.indexOf(p);
+                  return (
                   <div key={i} style={{
                     display: "flex", justifyContent: "space-between", alignItems: "center",
                     padding: "16px 0", borderBottom: `1px solid ${DARK}06`,
                   }}>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: 14 }}>{p.title}</div>
-                      <div style={{ fontSize: 12, color: MUTED }}>{p.tag} · {p.date}</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      {p.image && (
+                        <div style={{ width: 48, height: 36, borderRadius: 6, overflow: "hidden", flexShrink: 0 }}>
+                          <img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        </div>
+                      )}
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: 14 }}>{p.title}</div>
+                        <div style={{ fontSize: 12, color: MUTED }}>{p.tag} · {p.date}</div>
+                      </div>
                     </div>
                     <div style={{ display: "flex", gap: 8 }}>
-                      <button onClick={() => setEditIdx(i)} style={{
+                      <button onClick={() => setEditIdx(realIdx)} style={{
                         fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
                         background: `${ACCENT}10`, color: ACCENT, border: "none",
                         fontFamily: "'DM Mono', monospace",
                       }}>Edit</button>
                       <button onClick={() => {
-                        const n = blogPosts.filter((_, j) => j !== i);
+                        const n = [...blogPosts]; n[realIdx] = { ...n[realIdx], archived: true };
                         setBlogPosts(n); saveData(projects, n);
                       }} style={{
                         fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
-                        background: `${DARK}06`, color: MUTED, border: "none",
+                        background: "#D9770610", color: "#D97706", border: "none",
                         fontFamily: "'DM Mono', monospace",
-                      }}>Delete</button>
+                      }}>Archive</button>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
                 <button onClick={() => {
                   const n = [...blogPosts, {
                     id: `new-${Date.now()}`, title: "New Post", date: "Mar 2026", tag: "Topic",
-                    preview: "Preview text...", featured: false,
+                    preview: "Preview text...", featured: false, image: "",
                     detail: { tagline: "Tagline...", body: "Write your post here...", links: [] },
                   }];
                   setBlogPosts(n); setEditIdx(n.length - 1);
@@ -1992,6 +2064,15 @@ export default function PersonalSite() {
                     </div>
                   ))}
                   <div style={{ marginBottom: 16 }}>
+                    <label style={labelStyle}>Image URL (optional — e.g. /images/post.jpg)</label>
+                    <input value={p.image || ""} onChange={e => update("image", e.target.value)} style={inputStyle} placeholder="/images/my-post.jpg" />
+                    {p.image && (
+                      <div style={{ marginTop: 8, borderRadius: 8, overflow: "hidden", height: 120 }}>
+                        <img src={p.image} alt="preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ marginBottom: 16 }}>
                     <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: 8 }}>
                       <input type="checkbox" checked={p.featured || false} onChange={e => update("featured", e.target.checked)} />
                       Featured (Published Paper)
@@ -2021,14 +2102,112 @@ export default function PersonalSite() {
                       <input value={p.detail.funded || ""} onChange={e => updateDetail("funded", e.target.value)} style={inputStyle} />
                     </div>
                   </div>
-                  <button onClick={() => { saveData(projects, blogPosts); setEditIdx(null); }} style={{
-                    marginTop: 12, padding: "12px 28px", borderRadius: 8, cursor: "pointer",
-                    background: ACCENT, color: "white", border: "none", fontSize: 14,
-                    fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
-                  }}>Save & Close</button>
+                  <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
+                    <button onClick={() => saveData(projects, blogPosts)} style={{
+                      padding: "12px 28px", borderRadius: 8, cursor: "pointer",
+                      background: `${ACCENT}15`, color: ACCENT, border: `1px solid ${ACCENT}30`, fontSize: 14,
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
+                    }}>Save</button>
+                    <button onClick={() => { saveData(projects, blogPosts); setEditIdx(null); }} style={{
+                      padding: "12px 28px", borderRadius: 8, cursor: "pointer",
+                      background: ACCENT, color: "white", border: "none", fontSize: 14,
+                      fontFamily: "'DM Sans', sans-serif", fontWeight: 600,
+                    }}>Save & Close</button>
+                  </div>
                 </div>
               );
             })()}
+
+            {/* ARCHIVED TAB */}
+            {cmsTab === "archived" && (
+              <div style={{ padding: "24px 0" }}>
+                {[...projects, ...blogPosts].filter(x => x.archived).length === 0 ? (
+                  <p style={{ color: MUTED, fontFamily: "'DM Mono', monospace", fontSize: 13, paddingTop: 8 }}>
+                    Nothing archived yet. Archive items from the Projects or Blog Posts tabs.
+                  </p>
+                ) : (
+                  <>
+                    {projects.filter(p => p.archived).length > 0 && (
+                      <>
+                        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: MUTED, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12 }}>Projects</div>
+                        {projects.filter(p => p.archived).map((p) => {
+                          const realIdx = projects.indexOf(p);
+                          return (
+                            <div key={p.id} style={{
+                              display: "flex", justifyContent: "space-between", alignItems: "center",
+                              padding: "14px 0", borderBottom: `1px solid ${DARK}06`,
+                            }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                <span style={{ fontSize: 20 }}>{p.emoji}</span>
+                                <div>
+                                  <div style={{ fontWeight: 600, fontSize: 14 }}>{p.title}</div>
+                                  <div style={{ fontSize: 12, color: MUTED }}>{p.tag}</div>
+                                </div>
+                                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#D97706", background: "#D9770612", padding: "2px 8px", borderRadius: 6 }}>Archived</span>
+                              </div>
+                              <div style={{ display: "flex", gap: 8 }}>
+                                <button onClick={() => {
+                                  const n = [...projects]; n[realIdx] = { ...n[realIdx], archived: false };
+                                  setProjects(n); saveData(n, blogPosts);
+                                }} style={{
+                                  fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
+                                  background: `${ACCENT}10`, color: ACCENT, border: "none", fontFamily: "'DM Mono', monospace",
+                                }}>Restore</button>
+                                <button onClick={() => {
+                                  const n = projects.filter((_, j) => j !== realIdx);
+                                  setProjects(n); saveData(n, blogPosts);
+                                }} style={{
+                                  fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
+                                  background: `${DARK}06`, color: MUTED, border: "none", fontFamily: "'DM Mono', monospace",
+                                }}>Delete</button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </>
+                    )}
+                    {blogPosts.filter(p => p.archived).length > 0 && (
+                      <>
+                        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: MUTED, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12, marginTop: 24 }}>Blog Posts</div>
+                        {blogPosts.filter(p => p.archived).map((p) => {
+                          const realIdx = blogPosts.indexOf(p);
+                          return (
+                            <div key={p.id} style={{
+                              display: "flex", justifyContent: "space-between", alignItems: "center",
+                              padding: "14px 0", borderBottom: `1px solid ${DARK}06`,
+                            }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                <div>
+                                  <div style={{ fontWeight: 600, fontSize: 14 }}>{p.title}</div>
+                                  <div style={{ fontSize: 12, color: MUTED }}>{p.tag} · {p.date}</div>
+                                </div>
+                                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#D97706", background: "#D9770612", padding: "2px 8px", borderRadius: 6 }}>Archived</span>
+                              </div>
+                              <div style={{ display: "flex", gap: 8 }}>
+                                <button onClick={() => {
+                                  const n = [...blogPosts]; n[realIdx] = { ...n[realIdx], archived: false };
+                                  setBlogPosts(n); saveData(projects, n);
+                                }} style={{
+                                  fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
+                                  background: `${ACCENT}10`, color: ACCENT, border: "none", fontFamily: "'DM Mono', monospace",
+                                }}>Restore</button>
+                                <button onClick={() => {
+                                  const n = blogPosts.filter((_, j) => j !== realIdx);
+                                  setBlogPosts(n); saveData(projects, n);
+                                }} style={{
+                                  fontSize: 12, padding: "6px 14px", borderRadius: 6, cursor: "pointer",
+                                  background: `${DARK}06`, color: MUTED, border: "none", fontFamily: "'DM Mono', monospace",
+                                }}>Delete</button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
           </div>
           </>)}
         </div>
