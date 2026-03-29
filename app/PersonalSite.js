@@ -229,6 +229,7 @@ export default function PersonalSite() {
   const [wordFade, setWordFade] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [showBlog, setShowBlog] = useState(false);
   const [showCMS, setShowCMS] = useState(false);
   const [cmsAuthenticated, setCmsAuthenticated] = useState(false);
   const [cmsPassword, setCmsPassword] = useState("");
@@ -501,7 +502,7 @@ export default function PersonalSite() {
             <button
               key={item.id}
               className="nav-link"
-              onClick={() => scrollTo(item.id)}
+              onClick={() => item.id === "blog" ? setShowBlog(true) : scrollTo(item.id)}
               style={{
                 color: activeSection === item.id ? ACCENT : MUTED,
                 padding: 0,
@@ -873,98 +874,133 @@ export default function PersonalSite() {
         </div>
       </section>
 
-      {/* BLOG */}
+      {/* BLOG TEASER */}
       <section
         id="blog"
         className="section-padding"
         style={{
-          padding: "120px 60px",
+          padding: "120px 60px 0",
           background: "white",
         }}
       >
         <SectionTitle index="02">Things I Yap About</SectionTitle>
 
-        <div>
-          {blogPosts.filter(p => !p.archived).map((post, i) => (
-            <div
-              key={i}
-              className="blog-row"
-              onClick={() => { setSelectedPost(post); containerRef.current?.scrollTo({ top: 0 }); }}
-              style={{
-                padding: "28px 24px",
-                borderBottom: `1px solid ${DARK}08`,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                gap: 24,
-                borderRadius: 12,
-                background: "transparent",
-                borderLeft: "3px solid transparent",
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
-                  <Tag color={post.featured ? "#D97706" : ACCENT}>{post.tag}</Tag>
-                  <span
-                    style={{
-                      fontFamily: "'DM Mono', monospace",
-                      fontSize: 12,
-                      color: MUTED,
-                    }}
-                  >
-                    {post.date}
-                  </span>
-                  {post.featured && (
-                    <span style={{
-                      fontFamily: "'DM Mono', monospace",
-                      fontSize: 11,
-                      color: "#D97706",
-                      background: "#D9770612",
-                      padding: "2px 8px",
-                      borderRadius: 10,
-                    }}>
-                      🇯🇵 IAFOR Conference
-                    </span>
-                  )}
-                </div>
-                <h3
-                  style={{
-                    fontFamily: "'Instrument Serif', serif",
-                    fontSize: 22,
-                    fontWeight: 400,
-                    marginBottom: 8,
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  {post.title}
-                </h3>
-                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.6 }}>
-                  {post.preview}
-                </p>
-              </div>
-              {post.image && (
-                <div style={{
-                  flexShrink: 0, width: 90, height: 68, borderRadius: 10,
-                  overflow: "hidden", alignSelf: "center",
-                }}>
-                  <img src={post.image} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </div>
-              )}
-              <span
+        <div style={{ position: "relative" }}>
+          <div>
+            {blogPosts.filter(p => !p.archived).slice(0, 2).map((post, i) => (
+              <div
+                key={i}
+                className="blog-row"
+                onClick={() => { setSelectedPost(post); containerRef.current?.scrollTo({ top: 0 }); }}
                 style={{
-                  fontSize: 20,
-                  color: MUTED,
-                  marginTop: 30,
-                  flexShrink: 0,
+                  padding: "28px 24px",
+                  borderBottom: `1px solid ${DARK}08`,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  gap: 24,
+                  borderRadius: 12,
+                  background: "transparent",
+                  borderLeft: "3px solid transparent",
                 }}
               >
-                →
-              </span>
-            </div>
-          ))}
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+                    <Tag color={post.featured ? "#D97706" : ACCENT}>{post.tag}</Tag>
+                    <span
+                      style={{
+                        fontFamily: "'DM Mono', monospace",
+                        fontSize: 12,
+                        color: MUTED,
+                      }}
+                    >
+                      {post.date}
+                    </span>
+                    {post.featured && (
+                      <span style={{
+                        fontFamily: "'DM Mono', monospace",
+                        fontSize: 11,
+                        color: "#D97706",
+                        background: "#D9770612",
+                        padding: "2px 8px",
+                        borderRadius: 10,
+                      }}>
+                        🇯🇵 IAFOR Conference
+                      </span>
+                    )}
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontSize: 22,
+                      fontWeight: 400,
+                      marginBottom: 8,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {post.title}
+                  </h3>
+                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.6 }}>
+                    {post.preview}
+                  </p>
+                </div>
+                {post.image && (
+                  <div style={{
+                    flexShrink: 0, width: 90, height: 68, borderRadius: 10,
+                    overflow: "hidden", alignSelf: "center",
+                  }}>
+                    <img src={post.image} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                )}
+                <span
+                  style={{
+                    fontSize: 20,
+                    color: MUTED,
+                    marginTop: 30,
+                    flexShrink: 0,
+                  }}
+                >
+                  →
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Gradient fade overlay */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 120,
+              background: `linear-gradient(to bottom, transparent, ${LIGHT})`,
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "center",
+              paddingBottom: 8,
+            }}
+          >
+            <button
+              onClick={() => setShowBlog(true)}
+              className="cta-btn"
+              style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: 13,
+                color: ACCENT,
+                cursor: "pointer",
+                background: "white",
+                border: `1.5px solid ${ACCENT}30`,
+                padding: "10px 28px",
+                borderRadius: 40,
+              }}
+            >
+              See all posts →
+            </button>
+          </div>
         </div>
 
-        <div style={{ marginTop: 40, textAlign: "center" }}>
+        <div style={{ paddingTop: 48, paddingBottom: 60, textAlign: "center" }}>
           <button
             onClick={() => {
               const a = document.createElement("a");
@@ -1550,7 +1586,7 @@ export default function PersonalSite() {
                 gap: 8,
               }}
             >
-              ← Back to all posts
+              ← {showBlog ? "Back to all posts" : "Back to home"}
             </button>
             <Tag color={selectedPost.featured ? "#D97706" : ACCENT}>{selectedPost.tag}</Tag>
           </nav>
@@ -1716,9 +1752,246 @@ export default function PersonalSite() {
                 marginTop: 20,
               }}
             >
-              ← Back to home
+              ← {showBlog ? "Back to all posts" : "Back to home"}
             </button>
           </article>
+        </div>
+      )}
+
+      {/* FULL BLOG PAGE */}
+      {showBlog && !selectedPost && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: LIGHT,
+            zIndex: 200,
+            overflowY: "auto",
+            animation: "fadeIn 0.3s ease",
+          }}
+        >
+          {/* Back nav */}
+          <nav
+            style={{
+              position: "sticky",
+              top: 0,
+              padding: "20px 40px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              background: `${LIGHT}EE`,
+              backdropFilter: "blur(20px)",
+              zIndex: 10,
+            }}
+          >
+            <button
+              onClick={() => setShowBlog(false)}
+              style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: 13,
+                color: ACCENT,
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              ← Back to home
+            </button>
+          </nav>
+
+          <div style={{ maxWidth: 960, margin: "0 auto", padding: "40px 40px 120px" }}>
+            {/* Header */}
+            <div style={{ marginBottom: 16 }}>
+              <h1
+                style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: 52,
+                  fontWeight: 400,
+                  lineHeight: 1.1,
+                  letterSpacing: "-0.02em",
+                  color: DARK,
+                }}
+              >
+                Things I Yap About
+              </h1>
+              <p
+                style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: 20,
+                  fontStyle: "italic",
+                  color: MUTED,
+                  marginTop: 12,
+                }}
+              >
+                data, AI, and the occasional chaos
+              </p>
+            </div>
+
+            {/* YouTube link */}
+            <div style={{ marginBottom: 48 }}>
+              <a
+                href="https://www.youtube.com/@DitaDitaDitaDitaDita"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: 13,
+                  color: ACCENT,
+                  textDecoration: "none",
+                }}
+              >
+                Also yapping on YouTube — It's Dita! →
+              </a>
+            </div>
+
+            {(() => {
+              const visiblePosts = blogPosts.filter(p => !p.archived);
+              const featuredPost = visiblePosts[0];
+              const remainingPosts = visiblePosts.slice(1);
+
+              return (
+                <>
+                  {/* Featured post hero */}
+                  {featuredPost && (
+                    <div
+                      className="project-card"
+                      onClick={() => { setSelectedPost(featuredPost); }}
+                      style={{
+                        background: "white",
+                        borderRadius: 16,
+                        overflow: "hidden",
+                        marginBottom: 48,
+                        border: `1px solid ${DARK}08`,
+                      }}
+                    >
+                      {featuredPost.image && (
+                        <div style={{ height: 300, overflow: "hidden" }}>
+                          <img
+                            src={featuredPost.image}
+                            alt={featuredPost.title}
+                            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                          />
+                        </div>
+                      )}
+                      <div style={{ padding: 36 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
+                          <Tag color={featuredPost.featured ? "#D97706" : ACCENT}>{featuredPost.tag}</Tag>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: MUTED }}>
+                            {featuredPost.date}
+                          </span>
+                          {featuredPost.featured && (
+                            <span style={{
+                              fontFamily: "'DM Mono', monospace",
+                              fontSize: 11,
+                              color: "#D97706",
+                              background: "#D9770612",
+                              padding: "2px 8px",
+                              borderRadius: 10,
+                            }}>
+                              🇯🇵 IAFOR Conference
+                            </span>
+                          )}
+                        </div>
+                        <h2
+                          style={{
+                            fontFamily: "'Instrument Serif', serif",
+                            fontSize: 32,
+                            fontWeight: 400,
+                            lineHeight: 1.15,
+                            letterSpacing: "-0.01em",
+                            marginBottom: 12,
+                            color: DARK,
+                          }}
+                        >
+                          {featuredPost.title}
+                        </h2>
+                        {featuredPost.detail && (
+                          <p style={{
+                            fontFamily: "'Instrument Serif', serif",
+                            fontSize: 17,
+                            fontStyle: "italic",
+                            color: MUTED,
+                            lineHeight: 1.5,
+                            marginBottom: 12,
+                          }}>
+                            {featuredPost.detail.tagline}
+                          </p>
+                        )}
+                        <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.6 }}>
+                          {featuredPost.preview}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Post grid */}
+                  {remainingPosts.length > 0 && (
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: 24,
+                      }}
+                    >
+                      {remainingPosts.map((post, i) => (
+                        <div
+                          key={i}
+                          className="project-card"
+                          onClick={() => { setSelectedPost(post); }}
+                          style={{
+                            background: "white",
+                            borderRadius: 16,
+                            overflow: "hidden",
+                            border: `1px solid ${DARK}08`,
+                          }}
+                        >
+                          {post.image && (
+                            <div style={{ height: 160, overflow: "hidden" }}>
+                              <img
+                                src={post.image}
+                                alt={post.title}
+                                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                              />
+                            </div>
+                          )}
+                          <div style={{ padding: 28 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+                              <Tag color={post.featured ? "#D97706" : ACCENT}>{post.tag}</Tag>
+                              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: MUTED }}>
+                                {post.date}
+                              </span>
+                            </div>
+                            <h3
+                              style={{
+                                fontFamily: "'Instrument Serif', serif",
+                                fontSize: 22,
+                                fontWeight: 400,
+                                lineHeight: 1.2,
+                                letterSpacing: "-0.01em",
+                                marginBottom: 8,
+                                color: DARK,
+                              }}
+                            >
+                              {post.title}
+                            </h3>
+                            <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.6 }}>
+                              {post.preview}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </div>
         </div>
       )}
 
