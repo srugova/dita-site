@@ -108,6 +108,7 @@ const DEFAULT_POSTS = [
     title: "Revolutionizing Newsgathering: Digital Media & New Technologies",
     date: "Oct 2024",
     tag: "Published Paper",
+    image: "/images/iafor.png",
     preview: "Presented at The Asian Conference on Media, Communication & Film 2024 in Japan. Mixed-methods research on AI, ML, and data analytics in journalism.",
     featured: true,
     detail: {
