@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-const ACCENT = "#E8505B";
-const DARK = "#1A1A2E";
-const LIGHT = "#FAFAF9";
-const MUTED = "#94A3B8";
-const WARM = "#F5F0EB";
+const ACCENT = "#E8A0BF";
+const DARK = "#2D2D3A";
+const LIGHT = "#FDF6F8";
+const MUTED = "#A0A0B0";
+const WARM = "#F8EDF1";
 
 const ROLLING_WORDS = ["make sense", "drive decisions", "tell stories", "build products", "spark ideas"];
 
@@ -1101,8 +1101,8 @@ export default function PersonalSite() {
         id="contact"
         style={{
           padding: "120px 60px 80px",
-          background: DARK,
-          color: "white",
+          background: LIGHT,
+          color: DARK,
           position: "relative",
           overflow: "hidden",
         }}
@@ -1140,6 +1140,7 @@ export default function PersonalSite() {
               marginTop: 24,
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
+              color: DARK,
             }}
           >
             Got an idea?
@@ -1153,7 +1154,7 @@ export default function PersonalSite() {
             style={{
               fontSize: 16,
               lineHeight: 1.7,
-              color: `${MUTED}`,
+              color: MUTED,
               marginTop: 24,
               marginBottom: 40,
             }}
@@ -1191,7 +1192,7 @@ export default function PersonalSite() {
               display: "flex",
               gap: 32,
               paddingTop: 32,
-              borderTop: `1px solid ${LIGHT}15`,
+              borderTop: `1px solid ${DARK}15`,
             }}
           >
             {[
@@ -1218,39 +1219,38 @@ export default function PersonalSite() {
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Footer */}
-        <div
+      {/* FOOTER */}
+      <footer
+        style={{
+          padding: "24px 60px",
+          background: DARK,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span
           style={{
-            marginTop: 80,
-            paddingTop: 24,
-            borderTop: `1px solid ${LIGHT}10`,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 18,
+            fontStyle: "italic",
+            color: `${LIGHT}40`,
           }}
         >
-          <span
-            style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: 18,
-              fontStyle: "italic",
-              color: `${LIGHT}40`,
-            }}
-          >
-            dita<span style={{ color: ACCENT }}>.</span>
-          </span>
-          <span
-            style={{
-              fontFamily: "'DM Mono', monospace",
-              fontSize: 11,
-              color: `${LIGHT}30`,
-            }}
-          >
-            © 2026 — made with ☕ and questionable <span onClick={openCMS} style={{ cursor: "text" }}>sleep</span> habits
-          </span>
-        </div>
-      </section>
+          dita<span style={{ color: ACCENT }}>.</span>
+        </span>
+        <span
+          style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 11,
+            color: `${LIGHT}30`,
+          }}
+        >
+          © 2026 — made with ☕ and questionable <span onClick={openCMS} style={{ cursor: "text" }}>sleep</span> habits
+        </span>
+      </footer>
 
       {/* PROJECT DETAIL PAGE */}
       {selectedProject && (
