@@ -512,7 +512,7 @@ export default function PersonalSite() {
             </button>
           ))}
           <a
-            href="/services"
+            href="/"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 14,
@@ -526,7 +526,7 @@ export default function PersonalSite() {
               transition: "background 0.2s",
             }}
           >
-            Dita Data
+            ← Dita Data
           </a>
         </div>
       </nav>
