@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 export const metadata = {
   title: "Dita — Data Lead, Builder, Content Creator",
   description: "Personal site of Dita (Nurhadiyati). Lead of Product Data & Insights at Gramedia Digital. Monash Data Science grad. Builder of recommendation engines, data warehouses, and AI tools.",
@@ -27,7 +29,15 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body style={{ margin: 0, padding: 0 }}>{children}</body>
+      <body style={{ margin: 0, padding: 0 }}>
+        {children}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3350393301975391"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
