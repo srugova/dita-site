@@ -220,6 +220,13 @@ export default function ServicesPage() {
           gap: 16px;
           border: 1px solid ${CARD_BORDER};
           background: white;
+          transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+          cursor: default;
+        }
+        .svc-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 16px 48px rgba(28,25,23,0.10);
+          border-color: ${ACCENT};
         }
         .svc-card-featured {
           background: ${DARK_CARD};
@@ -227,6 +234,11 @@ export default function ServicesPage() {
           color: white;
           transform: scale(1.03);
           box-shadow: 0 20px 60px rgba(28,25,23,0.18);
+        }
+        .svc-card-featured:hover {
+          transform: scale(1.03) translateY(-6px);
+          box-shadow: 0 28px 72px rgba(28,25,23,0.28);
+          border-color: ${ACCENT};
         }
         .svc-card-tag {
           font-size: 11px;
@@ -555,29 +567,9 @@ export default function ServicesPage() {
             <h2 className="section-headline">Pick your starting point.</h2>
             <div className="services-grid">
 
-              {/* Data Chat */}
+              {/* Data Makeover */}
               <div className="svc-card">
-                <span className="svc-card-tag">Free</span>
-                <p className="svc-card-name">Data Chat</p>
-                <p className="svc-card-price">
-                  Rp 350rb
-                  <span className="svc-card-price-sub"> / session · Rp 1jt+ for enterprise · 1x free follow-up included</span>
-                </p>
-                <p className="svc-card-desc">
-                  Not sure where to start? Let&apos;s just talk. You tell me what&apos;s going on,
-                  I&apos;ll tell you honestly if and how I can help.
-                </p>
-                <ul className="svc-card-features">
-                  <li>No pitch, no pressure</li>
-                  <li>You&apos;ll leave with clarity either way</li>
-                  <li>I&apos;ll point you in the right direction</li>
-                </ul>
-                <a href="#" className="svc-card-cta svc-card-cta-light">Book a free call →</a>
-              </div>
-
-              {/* Data Makeover — featured */}
-              <div className="svc-card svc-card-featured">
-                <span className="svc-card-tag">Most popular</span>
+                <span className="svc-card-tag">Project</span>
                 <p className="svc-card-name">Data Makeover</p>
                 <p className="svc-card-price">
                   Start Rp 10jt
@@ -594,7 +586,27 @@ export default function ServicesPage() {
                   <li>Async-friendly, no daily stand-ups</li>
                   <li>Written handover so your team can maintain it</li>
                 </ul>
-                <a href="#" className="svc-card-cta svc-card-cta-dark">Start a sprint →</a>
+                <a href="#" className="svc-card-cta svc-card-cta-light">Start a sprint →</a>
+              </div>
+
+              {/* Data Chat — featured */}
+              <div className="svc-card svc-card-featured">
+                <span className="svc-card-tag">Most popular</span>
+                <p className="svc-card-name">Data Chat</p>
+                <p className="svc-card-price">
+                  Rp 350rb
+                  <span className="svc-card-price-sub"> / session · Rp 1jt+ for enterprise · 1x free follow-up included</span>
+                </p>
+                <p className="svc-card-desc">
+                  Not sure where to start? Let&apos;s just talk. You tell me what&apos;s going on,
+                  I&apos;ll tell you honestly if and how I can help.
+                </p>
+                <ul className="svc-card-features">
+                  <li>No pitch, no pressure</li>
+                  <li>You&apos;ll leave with clarity either way</li>
+                  <li>I&apos;ll point you in the right direction</li>
+                </ul>
+                <a href="#" className="svc-card-cta svc-card-cta-dark">Book a session →</a>
               </div>
 
               {/* Data Buddy */}
