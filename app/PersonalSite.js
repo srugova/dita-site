@@ -511,6 +511,23 @@ export default function PersonalSite() {
               {item.label}
             </button>
           ))}
+          <a
+            href="/services"
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 14,
+              color: DARK,
+              background: `${ACCENT}30`,
+              border: `1px solid ${ACCENT}60`,
+              borderRadius: 100,
+              padding: "6px 16px",
+              textDecoration: "none",
+              fontWeight: 500,
+              transition: "background 0.2s",
+            }}
+          >
+            Dita Data
+          </a>
         </div>
       </nav>
 
