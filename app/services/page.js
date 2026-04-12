@@ -351,6 +351,32 @@ export default function ServicesPage() {
         }
         .step-body { font-size: 14px; color: ${MUTED}; line-height: 1.7; }
 
+        /* HOW WE WORK */
+        .hww-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+        .hww-card {
+          background: white;
+          border: 1px solid ${CARD_BORDER};
+          border-radius: 16px;
+          padding: 28px;
+          transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .hww-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 40px rgba(28,25,23,0.08);
+          border-color: ${ACCENT};
+        }
+        .hww-card-title {
+          font-size: 15px;
+          font-weight: 600;
+          color: ${INK};
+          margin-bottom: 8px;
+        }
+        .hww-card-body { font-size: 14px; color: ${MUTED}; line-height: 1.7; }
+
         /* ABOUT */
         .about-grid {
           display: grid;
@@ -465,6 +491,7 @@ export default function ServicesPage() {
           .services-grid { grid-template-columns: 1fr; }
           .svc-card-featured { transform: none; }
           .steps-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+          .hww-grid { grid-template-columns: 1fr; }
           .about-grid { grid-template-columns: 1fr; gap: 40px; }
           .cred-grid { grid-template-columns: 1fr; }
           .svc-footer { flex-direction: column; gap: 16px; text-align: center; }
@@ -501,9 +528,8 @@ export default function ServicesPage() {
               Your data is a mess.<br />That&apos;s okay.<br />Let&apos;s fix it together.
             </h1>
             <p className="svc-hero-sub">
-              I help solo founders and small teams go from &ldquo;we have data somewhere&rdquo;
-              to &ldquo;we actually use this to make decisions.&rdquo; No fluff, no six-figure
-              retainers, no jargon.
+              A lean team of senior data operators helping companies turn data into real business outcomes.
+              No fluff, no six-figure retainers, no jargon — just the right people solving the right problems.
             </p>
             <div className="svc-btn-row">
               <a href="#" className="svc-btn-primary">Book a free Data Chat →</a>
@@ -676,6 +702,32 @@ export default function ServicesPage() {
           </div>
         </section>
 
+        {/* HOW WE WORK */}
+        <section className="svc-section" style={{ background: "white" }}>
+          <div className="svc-container">
+            <p className="section-label">Our approach</p>
+            <h2 className="section-headline">How we work.</h2>
+            <div className="hww-grid">
+              <div className="hww-card">
+                <p className="hww-card-title">Senior-only team</p>
+                <p className="hww-card-body">No juniors. Every project is handled by experienced data professionals.</p>
+              </div>
+              <div className="hww-card">
+                <p className="hww-card-title">Problem-first approach</p>
+                <p className="hww-card-body">We don&apos;t push tools. We design solutions based on your actual business bottlenecks.</p>
+              </div>
+              <div className="hww-card">
+                <p className="hww-card-title">Lean, scalable team</p>
+                <p className="hww-card-body">We assemble the right team for your needs — not a bloated structure.</p>
+              </div>
+              <div className="hww-card">
+                <p className="hww-card-title">Built for production</p>
+                <p className="hww-card-body">Everything we deliver is designed to be used, maintained, and scaled.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ABOUT */}
         <section id="about" className="svc-section">
           <div className="svc-container">
@@ -685,13 +737,14 @@ export default function ServicesPage() {
                 <p className="about-name">Dita Nurhadiyati</p>
                 <p className="about-role">Data Lead · Builder · Jakarta</p>
                 <p className="about-bio">
-                  I&apos;m a data lead with a Monash data science degree and years of hands-on
-                  experience building the kind of data infrastructure that actually works in
-                  production — recommendation engines, data warehouses, AI tools, the whole thing.
+                  Dita Data is a data and AI consultancy focused on building production-ready systems for modern teams.
                   <br /><br />
-                  By day I run data &amp; insights for a major digital platform. Dita Data is how
-                  I bring that experience to founders and small teams who deserve the same quality
-                  of thinking without hiring a full team.
+                  Led by a data leader with 10+ years of experience, we operate with a curated network of senior data specialists,
+                  each with 5+ years of hands-on experience across analytics, engineering, and AI.
+                  <br /><br />
+                  This model allows us to stay lean, move fast, and bring in the right expertise for each problem without compromising quality.
+                  <br /><br />
+                  From data warehouses to recommendation engines and internal AI tools, we build systems that don&apos;t just exist — they deliver measurable impact.
                 </p>
               </div>
               <div className="cred-grid">
@@ -707,12 +760,12 @@ export default function ServicesPage() {
                 </div>
                 <div className="cred-card">
                   <p className="cred-card-icon">🧠</p>
-                  <p className="cred-card-title">AI Tools</p>
+                  <p className="cred-card-title">Solutions &amp; Capabilities</p>
                   <p className="cred-card-sub">QueryMind — NL to SQL, privacy-first</p>
                 </div>
                 <div className="cred-card">
                   <p className="cred-card-icon">📣</p>
-                  <p className="cred-card-title">Content</p>
+                  <p className="cred-card-title">Insights &amp; Thinking</p>
                   <p className="cred-card-sub">@ditalovesdata — data for real people</p>
                 </div>
               </div>
