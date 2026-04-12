@@ -16,6 +16,9 @@ export const metadata = {
     title: "Dita — I make data make sense",
     description: "Data lead by day, content creator by night.",
   },
+  other: {
+    "google-adsense-account": "ca-pub-3350393301975391",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -28,15 +31,15 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap"
           rel="stylesheet"
         />
-      </head>
-      <body style={{ margin: 0, padding: 0 }}>
-        {children}
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3350393301975391"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
+      </head>
+      <body style={{ margin: 0, padding: 0 }}>
+        {children}
       </body>
     </html>
   );
