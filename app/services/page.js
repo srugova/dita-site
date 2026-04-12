@@ -560,8 +560,8 @@ export default function ServicesPage() {
                 <span className="svc-card-tag">Free</span>
                 <p className="svc-card-name">Data Chat</p>
                 <p className="svc-card-price">
-                  Free
-                  <span className="svc-card-price-sub"> / 45 min call</span>
+                  Rp 350rb
+                  <span className="svc-card-price-sub"> / session · Rp 1jt+ for enterprise · 1x free follow-up included</span>
                 </p>
                 <p className="svc-card-desc">
                   Not sure where to start? Let&apos;s just talk. You tell me what&apos;s going on,
@@ -580,8 +580,8 @@ export default function ServicesPage() {
                 <span className="svc-card-tag">Most popular</span>
                 <p className="svc-card-name">Fix Sprint</p>
                 <p className="svc-card-price">
-                  From Rp 10jt
-                  <span className="svc-card-price-sub"> / project</span>
+                  Start Rp 10jt
+                  <span className="svc-card-price-sub"> · scales with complexity</span>
                 </p>
                 <p className="svc-card-desc">
                   A focused 2–4 week sprint to fix one specific data problem. Clean your
@@ -602,8 +602,8 @@ export default function ServicesPage() {
                 <span className="svc-card-tag">Ongoing</span>
                 <p className="svc-card-name">Data Buddy</p>
                 <p className="svc-card-price">
-                  Monthly retainer
-                  <span className="svc-card-price-sub"> / ask for pricing</span>
+                  Rp 3–5jt
+                  <span className="svc-card-price-sub"> / month · min 2 months</span>
                 </p>
                 <p className="svc-card-desc">
                   Think of me as your part-time data lead. I&apos;m in your corner every month —
