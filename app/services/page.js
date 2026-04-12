@@ -575,10 +575,10 @@ export default function ServicesPage() {
                 <a href="#" className="svc-card-cta svc-card-cta-light">Book a free call →</a>
               </div>
 
-              {/* Fix Sprint — featured */}
+              {/* Data Makeover — featured */}
               <div className="svc-card svc-card-featured">
                 <span className="svc-card-tag">Most popular</span>
-                <p className="svc-card-name">Fix Sprint</p>
+                <p className="svc-card-name">Data Makeover</p>
                 <p className="svc-card-price">
                   Start Rp 10jt
                   <span className="svc-card-price-sub"> · scales with complexity</span>
