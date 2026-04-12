@@ -506,8 +506,8 @@ export default function ServicesPage() {
 
         {/* NAV */}
         <nav className="svc-nav">
-          <a href="/services" className="svc-nav-logo">
-            Dita Data<span>.</span>
+          <a href="/services" style={{ display: "flex", alignItems: "center" }}>
+            <img src="/images/ditadata-logo.png" alt="Dita Data" style={{ height: 32, width: "auto", display: "block" }} />
           </a>
           <div className="svc-nav-links">
             <a href="#services" className="svc-nav-link">Services</a>
@@ -733,9 +733,11 @@ export default function ServicesPage() {
           <div className="svc-container">
             <div className="about-grid">
               <div>
-                <div className="avatar-circle">D</div>
-                <p className="about-name">Dita Nurhadiyati</p>
-                <p className="about-role">Data Lead · Builder · Jakarta</p>
+                <img
+                  src="/images/ditadata-logo.png"
+                  alt="Dita Data"
+                  style={{ height: 40, width: "auto", display: "block", marginBottom: 32 }}
+                />
                 <p className="about-bio">
                   Dita Data is a data and AI consultancy focused on building production-ready systems for modern teams.
                   <br /><br />
@@ -743,30 +745,28 @@ export default function ServicesPage() {
                   each with 5+ years of hands-on experience across analytics, engineering, and AI.
                   <br /><br />
                   This model allows us to stay lean, move fast, and bring in the right expertise for each problem without compromising quality.
-                  <br /><br />
-                  From data warehouses to recommendation engines and internal AI tools, we build systems that don&apos;t just exist — they deliver measurable impact.
                 </p>
               </div>
               <div className="cred-grid">
                 <div className="cred-card">
-                  <p className="cred-card-icon">🎓</p>
-                  <p className="cred-card-title">Monash University</p>
-                  <p className="cred-card-sub">Master of Data Science</p>
+                  <p className="cred-card-icon">⏱️</p>
+                  <p className="cred-card-title">10+ Years Experience</p>
+                  <p className="cred-card-sub">Led by senior data professionals with a decade of hands-on industry experience</p>
                 </div>
                 <div className="cred-card">
-                  <p className="cred-card-icon">🏢</p>
-                  <p className="cred-card-title">Gramedia Digital</p>
-                  <p className="cred-card-sub">Lead of Product Data &amp; Insights</p>
+                  <p className="cred-card-icon">🚀</p>
+                  <p className="cred-card-title">Production-Proven</p>
+                  <p className="cred-card-sub">Systems built and shipped at scale — not prototypes, real products</p>
                 </div>
                 <div className="cred-card">
                   <p className="cred-card-icon">🧠</p>
                   <p className="cred-card-title">Solutions &amp; Capabilities</p>
-                  <p className="cred-card-sub">QueryMind — NL to SQL, privacy-first</p>
+                  <p className="cred-card-sub">AI tools, NL-to-SQL, recommendation engines, data pipelines</p>
                 </div>
                 <div className="cred-card">
                   <p className="cred-card-icon">📣</p>
                   <p className="cred-card-title">Insights &amp; Thinking</p>
-                  <p className="cred-card-sub">@ditalovesdata — data for real people</p>
+                  <p className="cred-card-sub">Shared openly — because good thinking should be accessible</p>
                 </div>
               </div>
             </div>
@@ -788,8 +788,8 @@ export default function ServicesPage() {
 
         {/* FOOTER */}
         <footer className="svc-footer" style={{ background: BG }}>
-          <a href="/services" className="svc-nav-logo" style={{ fontSize: 18 }}>
-            Dita Data<span style={{ color: ACCENT }}>.</span>
+          <a href="/services" style={{ display: "flex", alignItems: "center" }}>
+            <img src="/images/ditadata-logo.png" alt="Dita Data" style={{ height: 28, width: "auto", display: "block" }} />
           </a>
           <div className="svc-footer-contact">
             <a href="mailto:ditadata@gmail.com">ditadata@gmail.com</a>
